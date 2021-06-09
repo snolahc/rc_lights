@@ -5,7 +5,7 @@ from machine import Pin
 import rp2
 
 # Configure the number of WS2812 LEDs.
-NUM_LEDS = 128
+NUM_LEDS = 150
 PIN_NUM = 0
 brightness = 1
 
@@ -26,10 +26,15 @@ def ws2812():
 
 # Create the StateMachine with the ws2812 program, outputting on pin
 sm = rp2.StateMachine(1, ws2812, freq=8_000_000, sideset_base=Pin(1))
+sm_nl = 149
 sm2 = rp2.StateMachine(2, ws2812, freq=8_000_000, sideset_base=Pin(2))
+sm2_nl = 148
 sm3 = rp2.StateMachine(3, ws2812, freq=8_000_000, sideset_base=Pin(3))
+sm3_nl = 150
 sm4 = rp2.StateMachine(4, ws2812, freq=8_000_000, sideset_base=Pin(4))
+sm4_nl = 149
 sm5 = rp2.StateMachine(5, ws2812, freq=8_000_000, sideset_base=Pin(5))
+sm5_nl = 148
 
 # Start the StateMachine, it will wait for data on its FIFO.
 sm.active(1)
@@ -66,9 +71,9 @@ def pixels_fill(color):
 def color_chase(color, wait):
     for i in range(NUM_LEDS):
         pixels_set(i, color)
-        time.sleep(wait)
+#         time.sleep(wait)
         pixels_show()
-    time.sleep(0.1)
+#     time.sleep(0.1)
 
 def wheel(pos):
     # Input a value 0 to 255 to get a color value.
@@ -100,7 +105,7 @@ CYAN = (0, 255, 255)
 BLUE = (0, 0, 255)
 PURPLE = (180, 0, 255)
 WHITE = (255, 255, 255)
-COLORS = (BLACK, RED, YELLOW, GREEN, CYAN, BLUE, PURPLE, WHITE)
+COLORS = (RED, YELLOW, GREEN, CYAN, BLUE, PURPLE, WHITE)
 
 # print("fills")
 # for color in COLORS:
@@ -109,12 +114,14 @@ COLORS = (BLACK, RED, YELLOW, GREEN, CYAN, BLUE, PURPLE, WHITE)
 #     time.sleep(0.2)
 # 
 # print("chases")
-# for color in COLORS:
-#     color_chase(color, 0.01)
+while True:
+    for color in COLORS:
+        color_chase(color, 0.01)
 
 print("rainbow")
 while True:
     rainbow_cycle(0)
+
 
 
 
